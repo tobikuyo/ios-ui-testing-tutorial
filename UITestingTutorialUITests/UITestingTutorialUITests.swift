@@ -35,4 +35,16 @@ class UITestingTutorialUITests: XCTestCase {
        expectation(for: NSPredicate(format: "exists == 1"), evaluatedWith: downloadsCell, handler: nil)
         waitForExpectations(timeout: 5, handler: nil)
     }
+    
+    func testInvalidLogin_missingCredentialsAlertIsShown() {
+        let app = XCUIApplication()
+        app.launch()
+        app.navigationBars["Mockify Music"].buttons["Profile"].tap()
+        app.textFields["Username"].tap()
+        app/*@START_MENU_TOKEN@*/.staticTexts["Login"]/*[[".buttons[\"Login\"].staticTexts[\"Login\"]",".staticTexts[\"Login\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        let alert = app.alerts["Missing Credentials"]
+        XCTAssertTrue(alert.exists)
+        alert.scrollViews.otherElements.buttons["Ok"].tap()
+    }
 }
