@@ -47,4 +47,15 @@ class UITestingTutorialUITests: XCTestCase {
         XCTAssertTrue(alert.exists)
         alert.scrollViews.otherElements.buttons["Ok"].tap()
     }
+    
+    func testInvalidLogin_progressSpinnerIsHidden() {
+        let app = XCUIApplication()
+        app.launch()
+        app.navigationBars["Mockify Music"].buttons["Profile"].tap()
+        app/*@START_MENU_TOKEN@*/.staticTexts["Login"]/*[[".buttons[\"Login\"].staticTexts[\"Login\"]",".staticTexts[\"Login\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.alerts["Missing Credentials"].scrollViews.otherElements.buttons["Ok"].tap()
+        
+        let actiivityIndicator = app.activityIndicators["In progress"]
+        XCTAssertFalse(actiivityIndicator.exists)
+    }
 }
